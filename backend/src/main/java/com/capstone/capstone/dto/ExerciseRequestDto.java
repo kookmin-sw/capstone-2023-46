@@ -11,6 +11,5 @@ import java.util.List;
 public class ExerciseRequestDto {
     private String name;
     private Long set;
-
     private List<Long> weights;
 }
