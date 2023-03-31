@@ -38,6 +38,8 @@ public enum ErrorCode {
     INVALID_AUTHORITY(HttpStatus.FORBIDDEN,"권한이 없는 사용자 입니다"),
     INVALID_AUTHORITY_WRONG(HttpStatus.FORBIDDEN, "관리자 암호가 틀려 등록이 불가능합니다"),
 
+    INVALID_EXERCISE_ID(HttpStatus.FORBIDDEN, "Exercise를 동록한 사용자가 아닙니다."),
+
     /*
     404 not found
      */
