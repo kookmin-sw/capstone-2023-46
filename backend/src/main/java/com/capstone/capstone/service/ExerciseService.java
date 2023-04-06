@@ -3,7 +3,9 @@ package com.capstone.capstone.service;
 import com.capstone.capstone.dto.ExerciseRequestDto;
 import com.capstone.capstone.exceptionHandler.CustomException;
 import com.capstone.capstone.exceptionHandler.ErrorCode;
+import com.capstone.capstone.model.Calendar;
 import com.capstone.capstone.model.Exercise;
+import com.capstone.capstone.repository.CalendarRepositoy;
 import com.capstone.capstone.repository.ExerciseRepository;
 import com.capstone.capstone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +22,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ExerciseService {
     private final ExerciseRepository exerciseRepository;
+    private final CalendarRepositoy calendarRepositoy;
 
     @Transactional
     public void saveExercise(ExerciseRequestDto exerciseRequestDto, UserDetailsImpl userDetails){
+        Calendar calendar = calendarRepositoy.findCalendarByUserNicknameAndDate(userDetails.getUser().getNickname(), LocalDate.now()).get();
         Exercise exercise = new Exercise(exerciseRequestDto, userDetails);
+        calendar.addExercise(exercise);
         exerciseRepository.save(exercise);
     }
 
     @Transactional
     public void deleteExercise(UserDetailsImpl userDetails, Long id){
-        Optional<Exercise> exercise = exerciseRepository.findExerciseById(id);
+        Optional<Exercise> exercise = exerciseRepository.findById(id);
         if (!exercise.get().getUserNickname().equals(userDetails.getUser().getNickname()))
             throw new CustomException(ErrorCode.INVALID_EXERCISE_ID);
 
@@ -38,7 +43,7 @@ public class ExerciseService {
 
     @Transactional
     public ResponseEntity editExercise(UserDetailsImpl userDetails, Long id, ExerciseRequestDto exerciseRequestDto){
-        Optional<Exercise> exercise = exerciseRepository.findExerciseById(id);
+        Optional<Exercise> exercise = exerciseRepository.findById(id);
         if (!exercise.get().getUserNickname().equals(userDetails.getUser().getNickname()))
             throw new CustomException(ErrorCode.INVALID_EXERCISE_ID);
 
