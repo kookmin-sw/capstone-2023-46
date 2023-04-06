@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Builder
 public class ExerciseRequestDto {
     private String name;
     private Long set;
