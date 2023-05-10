@@ -6,6 +6,7 @@ import com.capstone.capstone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -17,17 +18,30 @@ public class CalendarService {
 
     @Transactional
     public void saveCalendar(UserDetailsImpl userDetails){
-        Calendar calendar = Calendar.builder()
-                .date(LocalDate.now())
-                .userNickname(userDetails.getUser().getNickname())
-                .build();
+//        try {
+//            Optional<Calendar> calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now());
+//        }
+//        catch (Exception e) {
+            Calendar calendar = Calendar.builder()
+                    .user(userDetails.getUser())
+                    .date(LocalDate.now())
+                    .userNickname(userDetails.getUser().getNickname())
+                    .build();
 
-        calendarRepositoy.save(calendar);
+            calendarRepositoy.save(calendar);
 
     }
 
-    public Calendar findCalendar(UserDetailsImpl userDetails){
-        Optional<Calendar> calendar = calendarRepositoy.findCalendarByUserNicknameAndDate(userDetails.getUser().getNickname(), LocalDate.now());
-        return calendar.get();
+    public String findCalendar(UserDetailsImpl userDetails){
+        Optional<Calendar> calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now());
+        return calendar.get().getExercises().get(0).getName();
+    }
+
+    public void deleteCalendar(UserDetailsImpl userDetails, Long id){
+
+    }
+
+    public void updateCalendar(UserDetailsImpl userDetails, Long id){
+
     }
 }

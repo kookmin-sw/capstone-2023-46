@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 public class ExerciseRequestDto {
-    private String name;
-    private Long set;
-    private List<Long> weights;
+        private String name;
+        private Long set;
+        private List<Long> weights;
 }

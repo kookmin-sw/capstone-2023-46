@@ -17,6 +17,7 @@ public class ExcerciseController {
     private final ExerciseService exerciseService;
     @PostMapping("/exercise")
     public ResponseEntity postExercise(@RequestBody ExerciseRequestDto exerciseRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        System.out.println(exerciseRequestDto.getName());
         exerciseService.saveExercise(exerciseRequestDto, userDetails);
         return ResponseEntity.ok().body("저장 완료");
     }
