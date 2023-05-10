@@ -9,17 +9,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long exercise_id;
 
     @Column(nullable = false)
     private String userNickname;
@@ -35,11 +35,14 @@ public class Exercise {
 
     @Column(nullable = false)
     private Long set;
-
+//lew05
     @Column(nullable = false)
     @ElementCollection(targetClass = Long.class)
     private List<Long> weights;
 
+    @ManyToOne
+    @JoinColumn(name = "calendar_id")
+    private Calendar calendar;
 
     public Exercise(ExerciseRequestDto exerciseRequestDto, UserDetailsImpl userDetails){
         weights = new ArrayList<>();

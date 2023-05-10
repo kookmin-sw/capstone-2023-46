@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -26,19 +27,32 @@ public class ExerciseService {
 
     @Transactional
     public void saveExercise(ExerciseRequestDto exerciseRequestDto, UserDetailsImpl userDetails){
-        Calendar calendar = calendarRepositoy.findCalendarByUserNicknameAndDate(userDetails.getUser().getNickname(), LocalDate.now()).get();
-        Exercise exercise = new Exercise(exerciseRequestDto, userDetails);
-        calendar.addExercise(exercise);
+        Calendar calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now()).get();
+        Exercise exercise = Exercise.builder()
+                        .name(exerciseRequestDto.getName())
+                        .calendar(calendar)
+                        .date(LocalDate.now())
+                        .time(LocalTime.now())
+                        .set(exerciseRequestDto.getSet())
+                        .userNickname(userDetails.getUser().getNickname())
+                        .build();
+//        calendar.addExercise(exercise);
+//        System.out.println(calendar.getExercises().get(0).getName());
+//        System.out.println(calendar.getExercises().get(0).getExercise_id());
         exerciseRepository.save(exercise);
     }
 
     @Transactional
     public void deleteExercise(UserDetailsImpl userDetails, Long id){
+        Optional<Calendar> calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now());
         Optional<Exercise> exercise = exerciseRepository.findById(id);
         if (!exercise.get().getUserNickname().equals(userDetails.getUser().getNickname()))
             throw new CustomException(ErrorCode.INVALID_EXERCISE_ID);
 
+//        System.out.println(calendar.get().getExercises().get(0).getName());
+//        calendarRepositoy.save(calendar.get());
         exerciseRepository.delete(exercise.get());
+        calendar.get().getExercises().remove(exercise.get());
     }
 
     @Transactional

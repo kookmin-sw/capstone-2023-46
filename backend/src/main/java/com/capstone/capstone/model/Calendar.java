@@ -17,7 +17,7 @@ import java.util.List;
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long calendar_id;
 
     @Column(nullable = false)
     private String userNickname;
@@ -25,11 +25,20 @@ public class Calendar {
     @Column(nullable = false)
     private LocalDate date;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "exercise_id")
+    @OneToMany(mappedBy = "calendar", cascade = CascadeType.REMOVE)
     private List<Exercise> exercises;
 
+    @OneToMany(mappedBy = "calendar", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Picture> pictures;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
     public void addExercise(Exercise exercise){
+        System.out.println(1);
         exercises.add(exercise);
+        System.out.println(exercise.getExercise_id());
     }
 }

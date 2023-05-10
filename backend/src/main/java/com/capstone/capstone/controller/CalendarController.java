@@ -24,7 +24,7 @@ public class CalendarController {
     }
 
     @GetMapping("/calendar")
-    public Calendar getCalendar(@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public String getCalendar(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return calendarService.findCalendar(userDetails);
     }
 }
