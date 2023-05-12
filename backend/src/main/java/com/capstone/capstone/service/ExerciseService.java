@@ -35,24 +35,27 @@ public class ExerciseService {
                         .time(LocalTime.now())
                         .set(exerciseRequestDto.getSet())
                         .userNickname(userDetails.getUser().getNickname())
+                        .weights(exerciseRequestDto.getWeights())
                         .build();
-//        calendar.addExercise(exercise);
-//        System.out.println(calendar.getExercises().get(0).getName());
-//        System.out.println(calendar.getExercises().get(0).getExercise_id());
+
+        // 당일 총 운동량 더해주기
+        calendar.setDayWeight(exercise.getExerciseWeight());
+
         exerciseRepository.save(exercise);
     }
 
     @Transactional
     public void deleteExercise(UserDetailsImpl userDetails, Long id){
-        Optional<Calendar> calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now());
+        Calendar calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now()).get();
         Optional<Exercise> exercise = exerciseRepository.findById(id);
         if (!exercise.get().getUserNickname().equals(userDetails.getUser().getNickname()))
             throw new CustomException(ErrorCode.INVALID_EXERCISE_ID);
 
-//        System.out.println(calendar.get().getExercises().get(0).getName());
-//        calendarRepositoy.save(calendar.get());
+        // 당일 총 운동량 빼주기
+        calendar.setDayWeight(-(exercise.get().getExerciseWeight()));
+
         exerciseRepository.delete(exercise.get());
-        calendar.get().getExercises().remove(exercise.get());
+        calendar.getExercises().remove(exercise.get());
     }
 
     @Transactional

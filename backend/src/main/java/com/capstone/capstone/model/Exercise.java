@@ -65,4 +65,12 @@ public class Exercise {
             this.weights.add(exerciseRequestDto.getWeights().get(i));
         }
     }
+
+    public Long getExerciseWeight(){
+        int dayWeight = 0;
+        for(int i = 0; i < set; i++){
+            dayWeight += weights.get(i);
+        }
+        return new Long(dayWeight);
+    }
 }

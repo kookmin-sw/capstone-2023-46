@@ -1,9 +1,6 @@
 package com.capstone.capstone.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,10 +17,18 @@ public class Calendar {
     private Long calendar_id;
 
     @Column(nullable = false)
-    private String userNickname;
-
-    @Column(nullable = false)
     private LocalDate date;
+
+    @Column
+    private boolean hasMeal;
+
+    @Column
+    private boolean hasExercise;
+
+    @Column
+    private Long dayCalorie;
+
+    @Column Long dayWeight;
 
     @OneToMany(mappedBy = "calendar", cascade = CascadeType.REMOVE)
     private List<Exercise> exercises;
@@ -35,10 +40,17 @@ public class Calendar {
     @JoinColumn(name = "user_id")
     private User user;
 
-
     public void addExercise(Exercise exercise){
         System.out.println(1);
         exercises.add(exercise);
         System.out.println(exercise.getExercise_id());
+    }
+
+    public void setDayCalorie(Long calorie){
+        this.dayCalorie += calorie;
+    }
+
+    public void setDayWeight(Long weight){
+        this.dayWeight += weight;
     }
 }

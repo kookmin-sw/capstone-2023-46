@@ -16,6 +16,12 @@ public class Routine_Exercise {
     private Long R_Exercise_Id;
 
     @Column
+    private String name;
+
+    @Column
     private Long set;
 
+    @ManyToOne
+    @JoinColumn(name = "routine_id")
+    private Routine routine;
 }
