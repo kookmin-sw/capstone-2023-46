@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+ // R_exercise Controller가 필요한가?
+
 @RestController
 @RequiredArgsConstructor
 public class R_ExerciseController {

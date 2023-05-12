@@ -22,11 +22,11 @@ public class Routine {
     @Column
     private String routine_name;
 
-//    @ManyToOne(cascade = CascadeType.REMOVE)
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-//    @OneToMany(mappedBy = "routine", cascade = CascadeType.REMOVE)
-//    private List<Routine_Exercise> r_exercises;
+    @OneToMany(mappedBy = "routine", cascade = CascadeType.REMOVE)
+    private List<Routine_Exercise> r_exercises;
 
 }

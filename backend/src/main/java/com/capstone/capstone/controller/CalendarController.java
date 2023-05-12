@@ -23,8 +23,11 @@ public class CalendarController {
         return ResponseEntity.ok().body("저장 완료");
     }
 
+
+    //calendar에 get 하는 건 그 달치 calendar를 get을 하도록 혹은 이전 달의 calendar를 get 하도록
+    // calendar가 내려줄 값은 각 요일의 총 칼로리 및 무게만
     @GetMapping("/calendar")
-    public String getCalendar(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        return calendarService.findCalendar(userDetails);
+    public ResponseEntity getCalendar(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return calendarService.findCalendarMonth(userDetails);
     }
 }
