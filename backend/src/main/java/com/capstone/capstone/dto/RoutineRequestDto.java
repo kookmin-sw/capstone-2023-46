@@ -4,5 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class RoutineRequestDto {
-    private String name;
+    private String routine_name;
+
+    private String total_exercise;
 }

@@ -17,7 +17,7 @@ import java.util.List;
 public class Routine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long routine_id;
+    private Long routineId;
 
     @Column
     private String routine_name;

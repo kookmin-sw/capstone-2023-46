@@ -4,6 +4,7 @@ package com.capstone.capstone.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,33 +28,21 @@ public class User {
     private String password;
 
     @Column
-    private String profileImage;
+    private String gymAddress;
 
-
-
-//    @Column(nullable = false)
-//    @Enumerated(value = EnumType.STRING) //DB갈 때 올 때 값을 String으로 변환해줘야함
-//    private UserRoleEnum role;
-
-    @Column(unique = true)
-    private String socialId;
+    // penalty용 연락처
+    @Column(nullable = false)
+    @ElementCollection(targetClass = String.class)
+    private List<String> penaltyYellowPages;
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    Schedule schedule;
 
     public User(String username, String nickname, String password) {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
-//        this.role = UserRoleEnum.USER;
-        this.socialId =null;
     }
 
-    //소셜 로그인
-    public User(String username, String nickname, String password, String profileImage, String socialId) {
-        this.username = username;
-        this.nickname = nickname;
-        this.password = password;
-        this.profileImage = profileImage;
-//        this.role = UserRoleEnum.USER;
-        this.socialId = socialId;
-    }
 
 }

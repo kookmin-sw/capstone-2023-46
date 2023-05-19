@@ -1,6 +1,8 @@
 package com.capstone.capstone.service;
 
 import com.capstone.capstone.dto.ResponseDto.CalendarResponseDto;
+import com.capstone.capstone.exceptionHandler.CustomException;
+import com.capstone.capstone.exceptionHandler.ErrorCode;
 import com.capstone.capstone.model.Calendar;
 import com.capstone.capstone.repository.CalendarRepositoy;
 import com.capstone.capstone.security.UserDetailsImpl;
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -26,24 +29,24 @@ public class CalendarService {
 
     @Transactional
     public void saveCalendar(UserDetailsImpl userDetails){
-//        try {
-//            Optional<Calendar> calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now());
-//        }
-//        catch (Exception e) {
-        
-        // 만약 오늘의 calendar가 이미 존재한다면 error handler 실행
-        
-        Calendar calendar = Calendar.builder()
-                .user(userDetails.getUser())
-                .date(LocalDate.now())
-                .hasMeal(false)
-                .hasExercise(false)
-                .dayCalorie(new Long(0))
-                .dayWeight(new Long(0))
-                .build();
 
-        calendarRepositoy.save(calendar);
+        try {
+            Optional<Calendar> calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now());
+            Long id = calendar.get().getCalendar_id();
+            // 만약 오늘의 calendar가 이미 존재한다면 error handler 실행
+            throw new CustomException(ErrorCode.ALREADY_HAS_CALENDAR);
+        } catch (NoSuchElementException e) {
+            Calendar calendar = Calendar.builder()
+                    .user(userDetails.getUser())
+                    .date(LocalDate.now())
+                    .hasMeal(false)
+                    .hasExercise(false)
+                    .dayCalorie(new Long(0))
+                    .dayWeight(new Long(0))
+                    .build();
 
+            calendarRepositoy.save(calendar);
+        }
     }
 
     public ResponseEntity findCalendarMonth(UserDetailsImpl userDetails){
