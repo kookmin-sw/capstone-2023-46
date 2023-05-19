@@ -1,6 +1,7 @@
 package com.capstone.capstone.service;
 
 import com.capstone.capstone.dto.ExerciseRequestDto;
+import com.capstone.capstone.dto.ResponseDto.ExerciseResponseDto;
 import com.capstone.capstone.exceptionHandler.CustomException;
 import com.capstone.capstone.exceptionHandler.ErrorCode;
 import com.capstone.capstone.model.Calendar;
@@ -16,6 +17,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,10 +74,20 @@ public class ExerciseService {
     @Transactional
     public ResponseEntity getExercise(UserDetailsImpl userDetails, String date){
         List<Exercise> exerciseList = exerciseRepository.findAllByDateAndUserNickname(LocalDate.parse(date, DateTimeFormatter.ISO_DATE), userDetails.getUser().getNickname());
+        List<ExerciseResponseDto> responseDtos = new ArrayList<>();
         if (!exerciseList.get(0).getUserNickname().equals(userDetails.getUser().getNickname()))
             throw new CustomException(ErrorCode.INVALID_EXERCISE_ID);
 
-        return ResponseEntity.ok().body(exerciseList);
+        for(Exercise exercise : exerciseList){
+            responseDtos.add(new ExerciseResponseDto().builder()
+                            .exercise_id(exercise.getExercise_id())
+                            .date(exercise.getDate())
+                            .name(exercise.getName())
+                            .set(exercise.getSet())
+                            .weight(exercise.getWeights())
+                    .build());
+        }
 
+        return ResponseEntity.ok().body(responseDtos);
     }
 }

@@ -23,6 +23,10 @@ public enum ErrorCode {
     INVALID_CATEGORY_AND_BRAND(HttpStatus.BAD_REQUEST, "브랜드와 카테고리가 전부 비어있습니다."),
 
     INVALID_CATEGORY(HttpStatus.BAD_REQUEST, "유효하지 않은 카테고리입니다."),
+
+    ALREADY_HAS_CALENDAR(HttpStatus.BAD_REQUEST, "금일 Calendar가 이미 존재합니다."),
+    
+    ALREADY_HAS_SCHEDULE(HttpStatus.BAD_REQUEST, "이번 주 Schedule이 이미 존재합니다"),
     /*
     401 UNAUTHORIZED : 인증되지 않은 사용자
     */

@@ -2,7 +2,6 @@ package com.capstone.capstone.dto;
 
 import lombok.*;
 
-@Getter
 @Setter
 @Data
 @Builder

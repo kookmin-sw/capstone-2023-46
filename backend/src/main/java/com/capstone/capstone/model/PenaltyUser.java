@@ -6,24 +6,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Routine_Exercise {
+@Builder
+public class PenaltyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long R_Exercise_Id;
+    private Long  penaltyUser_id;
 
     @Column
-    private String name;
+    private String userName;
 
-    @Column
-    private Long set;
+    @Column(nullable = false)
+    @ElementCollection(targetClass = String.class)
+    private List<String> penaltyYellowPages;
 
-    @ManyToOne
-    @JoinColumn(name = "routine_id")
-    private Routine routine;
 }

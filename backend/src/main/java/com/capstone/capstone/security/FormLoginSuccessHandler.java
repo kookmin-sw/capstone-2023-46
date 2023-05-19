@@ -1,7 +1,7 @@
 package com.capstone.capstone.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.capstone.capstone.dto.LoginResponseDto;
+import com.capstone.capstone.dto.ResponseDto.LoginResponseDto;
 import com.capstone.capstone.model.User;
 import com.capstone.capstone.security.jwt.JwtTokenUtils;
 import org.springframework.security.core.Authentication;
@@ -29,7 +29,7 @@ public class FormLoginSuccessHandler extends SavedRequestAwareAuthenticationSucc
         //User nicakname 내려주기 - 동관 천재님꺼 참고
         response.setContentType("application/json; charset=utf-8");
         User user = userDetails.getUser();
-        LoginResponseDto loginResponseDto = new LoginResponseDto(user.getId(), user.getNickname(), true, token, user.getProfileImage());
+        LoginResponseDto loginResponseDto = new LoginResponseDto(user.getId(), user.getNickname(), true, token);
         String result = mapper.writeValueAsString(loginResponseDto);
         response.getWriter().write(result);
     }

@@ -1,5 +1,8 @@
 package com.capstone.capstone.controller;
+import com.capstone.capstone.dto.AddressRequestDto;
 import com.capstone.capstone.dto.SignupRequestDto;
+import com.capstone.capstone.dto.YellowPageRequestDto;
+import com.capstone.capstone.model.User;
 import com.capstone.capstone.security.UserDetailsImpl;
 import com.capstone.capstone.service.*;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +26,6 @@ public class UserController {
         return userService.signupUser(requestDto);
     }
 
-    //회원가입에 이미지가 null이 들어올 때
-//    @PostMapping("/api/user/signup")
-//    public ResponseEntity signupNullUser(@RequestBody SignupImgRequestDto requestDto) {
-//        return userService.signupNullUser(requestDto);
-//    }
-
     //username 중복체크
     @PostMapping("/api/signup/checkID")
     public ResponseEntity checkUsername(@RequestBody SignupRequestDto requestDto) {
@@ -40,14 +37,28 @@ public class UserController {
     public ResponseEntity checkNickname(@RequestBody SignupRequestDto requestDto) {
         return userService.checkNickname(requestDto);
     }
+    
+    // 헬스장 등록 및 수정
 
-    //로그인 후 관리자 권한 얻을 수 있는 API
+    @PatchMapping("/user/address")
+    public ResponseEntity patchAddress(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody AddressRequestDto addressRequestDto){
+        return userService.editAddress(userDetails, addressRequestDto);
+    }
 
+    @PatchMapping("/user/yellowpage")
+    public ResponseEntity patchYellowPage(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody YellowPageRequestDto yellowPageRequestDto){
+        return userService.editYellowPage(userDetails, yellowPageRequestDto);
+    }
 
-    //소셜로그인 사용자 정보 조회
-//    @GetMapping("/social/user/islogin")
-//    public ResponseEntity socialUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        return userService.socialUserInfo(userDetails);
-//    }
+    @GetMapping("/user/address")
+    public ResponseEntity getAddress(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return userService.getAddress(userDetails);
+    }
+
+    @GetMapping("/userGet")
+    public User get(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return userService.getUser(userDetails);
+    }
+
 
 }
