@@ -1,36 +1,36 @@
-package com.capstone.capstone.service;
-
-import com.capstone.capstone.dto.MessageDto;
-import com.capstone.capstone.dto.ResponseDto.SMSResponseDto;
-import com.capstone.capstone.model.PenaltyUser;
-import com.capstone.capstone.model.User;
-import com.capstone.capstone.repository.PenaltyUserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
-
-import javax.transaction.Transactional;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Random;
-
-@Service
-@RequiredArgsConstructor
-public class CheckInService {
-    private final UserService userService;
-    private final PenaltyUserRepository penaltyUserRepository;
-
-    private final ScheduleService scheduleService;
-
-    private final SMSService smsService;
-    // 방문 확인
+//package com.capstone.capstone.service;
+//
+//import com.capstone.capstone.dto.MessageDto;
+//import com.capstone.capstone.dto.ResponseDto.SMSResponseDto;
+//import com.capstone.capstone.model.PenaltyUser;
+//import com.capstone.capstone.model.User;
+//import com.capstone.capstone.repository.PenaltyUserRepository;
+//import com.fasterxml.jackson.core.JsonProcessingException;
+//import lombok.RequiredArgsConstructor;
+//import org.springframework.scheduling.annotation.Scheduled;
+//import org.springframework.stereotype.Service;
+//import org.springframework.web.client.RestClientException;
+//
+//import javax.transaction.Transactional;
+//import java.io.UnsupportedEncodingException;
+//import java.net.URISyntaxException;
+//import java.security.InvalidKeyException;
+//import java.security.NoSuchAlgorithmException;
+//import java.time.DayOfWeek;
+//import java.time.LocalDate;
+//import java.util.List;
+//import java.util.Random;
+//
+//@Service
+//@RequiredArgsConstructor
+//public class CheckInService {
+//    private final UserService userService;
+//    private final PenaltyUserRepository penaltyUserRepository;
+//
+//    private final ScheduleService scheduleService;
+//
+//    private final SMSService smsService;
+//     방문 확인
 //    @Transactional
 //    @Scheduled(cron = "0 0 * * * *")
 //    public void checkVisitation() {
@@ -65,8 +65,8 @@ public class CheckInService {
 //        }
 //
 //    }
-
-    // penalty
+//
+//     penalty
 //    @Scheduled(cron = "0 0 12 * * *")
 //    public void imposePenalty()throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
 //        List<PenaltyUser> penaltyUsers = penaltyUserRepository.findAll();
@@ -80,7 +80,7 @@ public class CheckInService {
 //                .build();
 //        SMSResponseDto smsResponseDto = smsService.sendSms(messageDto);
 //        System.out.println(smsResponseDto);
-
+//
 //        for(PenaltyUser penaltyUser : penaltyUsers){
 //            String randomPhoneNumber = penaltyUser.getPenaltyYellowPages().get(rand.nextInt(penaltyUser.getPenaltyYellowPages().size()));
 //            MessageDto messageDto = MessageDto.builder()
@@ -94,4 +94,4 @@ public class CheckInService {
 //            System.out.println(smsResponseDto);
 //        }
 //    }
-}
+//}
