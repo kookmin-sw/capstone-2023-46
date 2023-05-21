@@ -68,6 +68,8 @@ public class ExerciseService {
 
         exercise.get().setExercise(exerciseRequestDto);
 
+        exerciseRepository.save(exercise.get());
+
         return ResponseEntity.ok().body(exercise.get());
     }
 
