@@ -1,7 +1,7 @@
 package com.capstone.capstone.controller;
 import com.capstone.capstone.dto.AddressRequestDto;
 import com.capstone.capstone.dto.SignupRequestDto;
-import com.capstone.capstone.dto.YellowPageRequestDto;
+import com.capstone.capstone.dto.PhoneNumbersRequestDto;
 import com.capstone.capstone.model.User;
 import com.capstone.capstone.security.UserDetailsImpl;
 import com.capstone.capstone.service.*;
@@ -9,9 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,20 +42,19 @@ public class UserController {
         return userService.editAddress(userDetails, addressRequestDto);
     }
 
-    @PatchMapping("/user/yellowpage")
-    public ResponseEntity patchYellowPage(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody YellowPageRequestDto yellowPageRequestDto){
-        return userService.editYellowPage(userDetails, yellowPageRequestDto);
-    }
-
     @GetMapping("/user/address")
     public ResponseEntity getAddress(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return userService.getAddress(userDetails);
+    }
+
+    @PatchMapping("/user/phone")
+    public ResponseEntity patchPhoneNumbers(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PhoneNumbersRequestDto phoneNumbersRequestDto){
+        return userService.editPhoneNumber(userDetails, phoneNumbersRequestDto);
     }
 
     @GetMapping("/userGet")
     public User get(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return userService.getUser(userDetails);
     }
-
 
 }

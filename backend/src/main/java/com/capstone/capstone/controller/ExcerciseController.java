@@ -15,29 +15,29 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class ExcerciseController {
     private final ExerciseService exerciseService;
-    @PostMapping("/exercise")
+    @PostMapping("/calendar/exercise")
     public ResponseEntity postExercise(@RequestBody ExerciseRequestDto exerciseRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         System.out.println(exerciseRequestDto.getName());
         exerciseService.saveExercise(exerciseRequestDto, userDetails);
         return ResponseEntity.ok().body("저장 완료");
     }
 
-    @DeleteMapping("/exercise/{id}")
+    @DeleteMapping("/calendar/exercise/{id}")
     public ResponseEntity delExercise(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id){
         exerciseService.deleteExercise(userDetails, id);
         return ResponseEntity.ok().body("삭제 완료");
     }
 
-    @PutMapping("/exercise/{id}")
+    @PutMapping("/calendar/exercise/{id}")
     public ResponseEntity putExercise(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id,
                                       @RequestBody ExerciseRequestDto exerciseRequestDto){
         return exerciseService.editExercise(userDetails, id, exerciseRequestDto);
     }
 
     //date sring으로 받은 뒤 localdate로 변환
-    @GetMapping("/exercise/{date}")
-    public ResponseEntity getExercise(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String date){
-        return exerciseService.getExercise(userDetails, date);
+    @GetMapping("/calendar/{calendar_id}/exercise/{date}")
+    public ResponseEntity getExercise(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long calendar_id, @PathVariable String date){
+        return exerciseService.getExercise(userDetails, date, calendar_id);
     }
 
 }

@@ -53,6 +53,8 @@ public class ScheduleService {
 
     public ResponseEntity editSchedule(UserDetailsImpl userDetails, ScheduleRequestDto scheduleRequestDto){
         Schedule schedule = scheduleRepository.findByUser(userDetails.getUser()).get();
+        if(schedule.getUser().getChance() < 1)
+            throw new CustomException(ErrorCode.NO_MORE_CHANCE);
         schedule.setCheckSchedule(scheduleRequestDto.getScheduleList());
         scheduleRepository.save(schedule);
         

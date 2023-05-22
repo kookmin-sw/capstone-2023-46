@@ -5,6 +5,8 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class YellowPageRequestDto {
+public class PhoneNumbersRequestDto {
+    private String phoneNumber;
+
     private List<String> yellowPage;
 }

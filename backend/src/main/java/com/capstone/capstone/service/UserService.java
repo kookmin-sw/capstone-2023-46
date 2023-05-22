@@ -6,7 +6,7 @@ import com.capstone.capstone.dto.AddressRequestDto;
 import com.capstone.capstone.dto.ResponseDto.AddressResponseDto;
 import com.capstone.capstone.dto.SignupRequestDto;
 //import com.capstone.capstone.dto.responseDto.SocialLoginResponseDto;
-import com.capstone.capstone.dto.YellowPageRequestDto;
+import com.capstone.capstone.dto.PhoneNumbersRequestDto;
 import com.capstone.capstone.exceptionHandler.CustomException;
 import com.capstone.capstone.exceptionHandler.ErrorCode;
 import com.capstone.capstone.model.User;
@@ -14,7 +14,6 @@ import com.capstone.capstone.model.User;
 import com.capstone.capstone.repository.UserRepository;
 import com.capstone.capstone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -126,11 +125,11 @@ public class UserService {
         return ResponseEntity.ok().body(addressResponseDto);
     }
 
-    public ResponseEntity editYellowPage(UserDetailsImpl userDetails, YellowPageRequestDto yellowPageRequestDto){
+    public ResponseEntity editPhoneNumber(UserDetailsImpl userDetails, PhoneNumbersRequestDto phoneNumbersRequestDto){
         User user = userRepository.findByUsername(userDetails.getUsername()).get();
-        user.setPenaltyYellowPages(yellowPageRequestDto.getYellowPage());
-        return ResponseEntity.ok().body("전화번호부 저장 완료");
-
+        user.setPhoneNumber(phoneNumbersRequestDto.getPhoneNumber());
+        user.setPenaltyYellowPages(phoneNumbersRequestDto.getYellowPage());
+        return ResponseEntity.ok().body("핸드폰 번호 및 전화번호부 저장 완료");
     }
 
     public User getUser(UserDetailsImpl userDetails){
@@ -142,6 +141,15 @@ public class UserService {
         List<User> userList = userRepository.findAllByScheduleIsNotNull();
 
         return userList;
+    }
+
+    @Transactional
+    public void resetChanceAllUser(){
+        List<User> userList = userRepository.findAll();
+        for(User user : userList){
+            user.setChance(new Long(3));
+            userRepository.save(user);
+        }
     }
 
 }
