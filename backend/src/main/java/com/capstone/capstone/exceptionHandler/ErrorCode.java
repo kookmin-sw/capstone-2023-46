@@ -44,14 +44,31 @@ public enum ErrorCode {
 
     INVALID_EXERCISE_ID(HttpStatus.FORBIDDEN, "Exercise를 동록한 사용자가 아닙니다."),
 
+    INVALID_PICTURE_ID(HttpStatus.FORBIDDEN, "Pircture를 등록한 사용자가 아닙니다."),
+
+    INVALID_MEAL_ID(HttpStatus.FORBIDDEN, "Meal을 동록한 사용자가 아닙니다."),
+
+    INVALID_ROUTINE_ID(HttpStatus.FORBIDDEN, "Routine을 등록한 사용자가 아닙니다."),
+
+    NO_MORE_CHANCE(HttpStatus.FORBIDDEN, "남은 Chance가 없습니다."),
+
     /*
     404 not found
      */
     NOT_FOUND_CHATROOM(HttpStatus.NOT_FOUND, "chatRoom이 존재하지 않습니다."),
     API_NOT_FOUND(HttpStatus.NOT_FOUND, "잘못된 주소입니다."),
     COFFEE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 커피가 없습니다."),
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다"),
+    
+    EXERCISE_NOT_FOUND(HttpStatus.NOT_FOUND, "Exercise를 찾을 수 없습니다. 날짜를 확인해주세요"),
 
+    PICTURE_NOT_FOUND(HttpStatus.NOT_FOUND, "Picture를 찾을 수 없습니다."),
+
+    ROUTINE_NOT_FOUND(HttpStatus.NOT_FOUND, "Routine을 찾을 수 없습니다.");
+
+
+
+    
 
 
     private final HttpStatus httpStatus;

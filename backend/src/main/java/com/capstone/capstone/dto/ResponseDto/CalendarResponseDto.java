@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CalendarResponseDto {
+    private Long calendar_id;
 
     private LocalDate date;
 

@@ -32,7 +32,7 @@ public class CalendarService {
 
         try {
             Optional<Calendar> calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now());
-            Long id = calendar.get().getCalendar_id();
+            Long id = calendar.get().getCalendarId();
             // 만약 오늘의 calendar가 이미 존재한다면 error handler 실행
             throw new CustomException(ErrorCode.ALREADY_HAS_CALENDAR);
         } catch (NoSuchElementException e) {
@@ -60,6 +60,7 @@ public class CalendarService {
 
         for(Calendar calendar : calendarList){
             CalendarResponseDto calendarResponseDto = CalendarResponseDto.builder()
+                    .calendar_id(calendar.getCalendarId())
                     .dayCalorie(calendar.getDayCalorie())
                     .dayWeight(calendar.getDayWeight())
                     .hasExercise(calendar.isHasExercise())
@@ -68,10 +69,7 @@ public class CalendarService {
                     .build();
 
             calendarDtoList.add(calendarResponseDto);
-
-            // calendar가 비어있으면 빈 calendar를 생성해서 줄지 말지 결정해야 한다.
         }
-
 
         return ResponseEntity.ok().body(calendarDtoList);
     }

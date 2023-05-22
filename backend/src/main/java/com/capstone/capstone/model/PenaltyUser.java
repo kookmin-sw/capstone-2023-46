@@ -21,6 +21,8 @@ public class PenaltyUser {
     @Column
     private String userName;
 
+    private String phoneNumber;
+
     @Column(nullable = false)
     @ElementCollection(targetClass = String.class)
     private List<String> penaltyYellowPages;

@@ -28,17 +28,18 @@ public class RoutineController {
     }
 
     @GetMapping("/routine/{routine_id}")
-    public ResponseEntity getRoutine(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long routine_id){
+    public ResponseEntity getRoutineDetail(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long routine_id){
         return routineService.findRoutine(userDetails, routine_id);
     }
 
     @DeleteMapping("/routine/{routine_id}")
-    public void delRoutine(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long routine_id){
-
+    public ResponseEntity delRoutine(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long routine_id){
+        return routineService.delRoutine(userDetails, routine_id);
     }
 
     @PutMapping("/routine/{routine_id}")
-    public void putRoutine(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long routine_id){
-
+    public ResponseEntity putRoutine(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestPart("exercise") List<R_ExerciseRequestDto> rExerciseRequestDtos,
+                                     @RequestPart("routine") RoutineRequestDto routineRequestDto, @PathVariable Long routine_id){
+        return routineService.editRoutine(userDetails, routine_id, rExerciseRequestDtos, routineRequestDto);
     }
 }

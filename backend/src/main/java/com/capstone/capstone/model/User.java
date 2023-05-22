@@ -30,6 +30,14 @@ public class User {
     @Column
     private String gymAddress;
 
+    @Column
+    private String phoneNumber;
+
+    
+    //만드는 순간에 기회를 3번 줘야함
+    @Column
+    private Long chance;
+
     // penalty용 연락처
     @Column(nullable = false)
     @ElementCollection(targetClass = String.class)
@@ -42,6 +50,7 @@ public class User {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
+        this.chance = new Long(3);
     }
 
 

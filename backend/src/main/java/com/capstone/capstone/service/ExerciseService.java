@@ -36,48 +36,69 @@ public class ExerciseService {
                         .date(LocalDate.now())
                         .time(LocalTime.now())
                         .set(exerciseRequestDto.getSet())
-                        .userNickname(userDetails.getUser().getNickname())
                         .weights(exerciseRequestDto.getWeights())
                         .build();
 
         // 당일 총 운동량 더해주기
         calendar.setDayWeight(exercise.getExerciseWeight());
+        // has exercise true로
+        calendar.setHasExercise(true);
 
         exerciseRepository.save(exercise);
     }
 
     @Transactional
     public void deleteExercise(UserDetailsImpl userDetails, Long id){
-        Calendar calendar = calendarRepositoy.findCalendarByUserAndDate(userDetails.getUser(), LocalDate.now()).get();
-        Optional<Exercise> exercise = exerciseRepository.findById(id);
-        if (!exercise.get().getUserNickname().equals(userDetails.getUser().getNickname()))
+        Exercise exercise = exerciseRepository.findById(id).orElseThrow(
+                () -> new CustomException(ErrorCode.INVALID_EXERCISE_ID)
+        );
+        
+        if (!exercise.getCalendar().getUser().getNickname().equals(userDetails.getUser().getNickname()))
             throw new CustomException(ErrorCode.INVALID_EXERCISE_ID);
 
         // 당일 총 운동량 빼주기
-        calendar.setDayWeight(-(exercise.get().getExerciseWeight()));
+        exercise.getCalendar().setDayWeight(-(exercise.getExerciseWeight()));
 
-        exerciseRepository.delete(exercise.get());
-        calendar.getExercises().remove(exercise.get());
+        // 삭제할 때 hasExercise 체크
+        if(exercise.getCalendar().getDayWeight() == 0);
+            exercise.getCalendar().setHasExercise(false);
+
+        exerciseRepository.delete(exercise);
     }
 
-    @Transactional
     public ResponseEntity editExercise(UserDetailsImpl userDetails, Long id, ExerciseRequestDto exerciseRequestDto){
-        Optional<Exercise> exercise = exerciseRepository.findById(id);
-        if (!exercise.get().getUserNickname().equals(userDetails.getUser().getNickname()))
+        Exercise exercise = exerciseRepository.findById(id).orElseThrow(
+                () -> new CustomException(ErrorCode.EXERCISE_NOT_FOUND)
+        );
+        // exercise 있는지
+
+        if (!exercise.getCalendar().getUser().getNickname().equals(userDetails.getUser().getNickname()))
             throw new CustomException(ErrorCode.INVALID_EXERCISE_ID);
 
-        exercise.get().setExercise(exerciseRequestDto);
+        exercise.setExercise(exerciseRequestDto);
+        exerciseRepository.save(exercise);
 
-        exerciseRepository.save(exercise.get());
-
-        return ResponseEntity.ok().body(exercise.get());
+        ExerciseResponseDto exerciseResponseDto = ExerciseResponseDto.builder()
+                .exercise_id(exercise.getExercise_id())
+                .date(exercise.getDate())
+                .name(exercise.getName())
+                .set(exercise.getSet())
+                .weight(exercise.getWeights())
+                .build();
+        return ResponseEntity.ok().body(exerciseResponseDto);
     }
 
     @Transactional
-    public ResponseEntity getExercise(UserDetailsImpl userDetails, String date){
-        List<Exercise> exerciseList = exerciseRepository.findAllByDateAndUserNickname(LocalDate.parse(date, DateTimeFormatter.ISO_DATE), userDetails.getUser().getNickname());
+    public ResponseEntity getExercise(UserDetailsImpl userDetails, String date, Long calendar_id){
+        List<Exercise> exerciseList = exerciseRepository.findAllByDateAndCalendar_CalendarId(LocalDate.parse(date, DateTimeFormatter.ISO_DATE), calendar_id);
         List<ExerciseResponseDto> responseDtos = new ArrayList<>();
-        if (!exerciseList.get(0).getUserNickname().equals(userDetails.getUser().getNickname()))
+
+        // exercise 없는 경우
+        if(exerciseList.isEmpty())
+            throw new CustomException(ErrorCode.EXERCISE_NOT_FOUND);
+
+        // calendar user와 접속 user 닉네임이 다른 경우
+        if (!exerciseList.get(0).getCalendar().getUser().getNickname().equals(userDetails.getUser().getNickname()))
             throw new CustomException(ErrorCode.INVALID_EXERCISE_ID);
 
         for(Exercise exercise : exerciseList){
