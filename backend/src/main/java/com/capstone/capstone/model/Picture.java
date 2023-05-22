@@ -1,16 +1,20 @@
 package com.capstone.capstone.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Picture {
 
     @Id
@@ -21,10 +25,10 @@ public class Picture {
     private String UserNickname;
 
     @Column
-    private LocalTime time;
+    private LocalDate date;
 
     @Column
-    private String url;
+    private String urls;
 
     @ManyToOne
     @JoinColumn(name = "Calendar_id")

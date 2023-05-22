@@ -22,9 +22,6 @@ public class Exercise {
     private Long exercise_id;
 
     @Column(nullable = false)
-    private String userNickname;
-
-    @Column(nullable = false)
     private LocalDate date;
 
     @Column(nullable = false)
@@ -46,7 +43,6 @@ public class Exercise {
 
     public Exercise(ExerciseRequestDto exerciseRequestDto, UserDetailsImpl userDetails){
         weights = new ArrayList<>();
-        this.userNickname = userDetails.getUser().getNickname();
         this.name = exerciseRequestDto.getName();
         this.set = exerciseRequestDto.getSet();
         this.date = LocalDate.now();
@@ -57,20 +53,20 @@ public class Exercise {
     }
 
     public void setExercise(ExerciseRequestDto exerciseRequestDto){
-        weights = new ArrayList<>();
+        calendar.setDayWeight(-this.getExerciseWeight());
+
         this.name = exerciseRequestDto.getName();
         this.set = exerciseRequestDto.getSet();
+        this.weights = exerciseRequestDto.getWeights();
         // 시간도 초기화를 해야할까?
-        for(int i = 0; i < this.set; i++){
-            this.weights.add(exerciseRequestDto.getWeights().get(i));
-        }
+        calendar.setDayWeight(this.getExerciseWeight());
     }
 
-    public Long getExerciseWeight(){
+    public long getExerciseWeight(){
         int dayWeight = 0;
-        for(int i = 0; i < set; i++){
-            dayWeight += weights.get(i);
+        for(int i = 0; i < this.set; i++){
+            dayWeight += this.weights.get(i);
         }
-        return new Long(dayWeight);
+        return dayWeight;
     }
 }

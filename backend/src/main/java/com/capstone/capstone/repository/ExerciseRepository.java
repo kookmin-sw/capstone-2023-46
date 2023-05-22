@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
-    Optional<Exercise> findByUserNickname(String userNickname);
 
     Optional<Exercise> findById(Long id);
 
-    List<Exercise> findAllByDateAndUserNickname(LocalDate localDate, String userNickname);
+    List<Exercise> findAllByDateAndCalendar_CalendarId(LocalDate localDate, Long calendar_id);
 }
