@@ -3,11 +3,13 @@ package com.example.health.view.splash
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.example.health.Navigation
 import kotlinx.coroutines.delay
 
 @Composable
@@ -15,7 +17,7 @@ fun SplashScreen(navController: NavHostController) {
 
     val scale = remember { Animatable(0.0f) }
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(true) {
         scale.animateTo(
             targetValue = 0.7f,
             animationSpec = tween(800, easing = {
@@ -23,10 +25,14 @@ fun SplashScreen(navController: NavHostController) {
             })
         )
         delay(500)
-        navController.navigate(Navigation.Main.route) {
-            popUpTo(Navigation.Splash.route) {
+        navController.navigate("sign_in") {
+            popUpTo("splash") {
                 inclusive = true
             }
         }
+    }
+
+    Surface(modifier = Modifier.fillMaxSize()) {
+
     }
 }
