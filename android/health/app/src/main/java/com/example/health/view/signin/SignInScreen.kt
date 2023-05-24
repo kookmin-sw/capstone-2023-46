@@ -13,10 +13,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SignInScreen(navController: NavHostController) {
-    var id by remember { mutableStateOf("") }
+fun SignInScreen(
+    navController: NavHostController,
+    viewModel: SignInViewModel = koinViewModel()
+) {
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Surface {
@@ -27,9 +31,9 @@ fun SignInScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(20.dp))
 
             TextField(
-                value = id,
-                onValueChange = { id = it },
-                label = { Text(text = "ID") }
+                value = email,
+                onValueChange = { email = it },
+                label = { Text(text = "Email") }
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -37,7 +41,7 @@ fun SignInScreen(navController: NavHostController) {
             TextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text(text = "PASSWORD") }
+                label = { Text(text = "Password") }
             )
 
             Spacer(modifier = Modifier.height(20.dp))

@@ -27,6 +27,11 @@ fun MainScreen(
     )
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "") }
+            )
+        },
         bottomBar = {
             BottomNavigation {
                 val backstackEntry by tapController.currentBackStackEntryAsState()

@@ -20,7 +20,7 @@ object ApiModule {
     private fun provideRetrofit(
         okHttpClient: OkHttpClient
     ): Retrofit = Retrofit.Builder()
-        .baseUrl("https://test") // will set in BaseInterceptor
+        .baseUrl("http://3.34.97.3") // will set in BaseInterceptor
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
