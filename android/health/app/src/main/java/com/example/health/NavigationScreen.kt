@@ -8,6 +8,7 @@ import com.example.health.view.calendar.diet.DietScreen
 import com.example.health.view.calendar.photo.PhotoScreen
 import com.example.health.view.calendar.record.RecordScreen
 import com.example.health.view.main.MainScreen
+import com.example.health.view.map.MapScreen
 import com.example.health.view.routine.RoutineScreen
 import com.example.health.view.signin.SignInScreen
 import com.example.health.view.signup.SignUpScreen
@@ -29,5 +30,6 @@ fun NavigationScreen(
         composable("photo") { PhotoScreen() }
         composable("record") { RecordScreen(navController) }
         composable("routine") { RoutineScreen() }
+        composable("map") { MapScreen() }
     }
 }

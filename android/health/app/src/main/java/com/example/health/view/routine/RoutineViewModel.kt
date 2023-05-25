@@ -8,6 +8,28 @@ import kotlinx.coroutines.launch
 class RoutineViewModel: ViewModel() {
     val routineList = MutableStateFlow(listOf<Routine>())
 
+    init {
+        viewModelScope.launch {
+            val list = listOf(
+                Routine(
+                    name = "상체",
+                    exerciseList = listOf(
+                        RoutineExercise("벤치", 5),
+                        RoutineExercise("푸쉬업", 7),
+                    )
+                ),
+                Routine(
+                    name = "하체",
+                    exerciseList = listOf(
+                        RoutineExercise("스쿼트", 5),
+                        RoutineExercise("레그익스텐션", 7),
+                    )
+                )
+            )
+            routineList.tryEmit(list)
+        }
+    }
+
     fun test() {
         viewModelScope.launch {
             val list = listOf(
@@ -16,6 +38,13 @@ class RoutineViewModel: ViewModel() {
                     exerciseList = listOf(
                         RoutineExercise("벤치", 5),
                         RoutineExercise("푸쉬업", 7),
+                    )
+                ),
+                Routine(
+                    name = "하체",
+                    exerciseList = listOf(
+                        RoutineExercise("스쿼트", 5),
+                        RoutineExercise("레그익스텐션", 7),
                     )
                 )
             )

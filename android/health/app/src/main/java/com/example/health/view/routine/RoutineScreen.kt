@@ -23,7 +23,7 @@ fun RoutineScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "운동 기록 추가") },
+                title = { Text(text = "나만의 루틴") },
                 actions = {
                     IconButton(onClick = { viewModel.test() }) {
                         Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = null)

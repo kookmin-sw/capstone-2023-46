@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 class RecordViewModel: ViewModel() {
     val exerciseList = MutableStateFlow(listOf<Exercise>())
 
-    fun test() {
+    init {
         viewModelScope.launch {
             val list = listOf(
                 Exercise(

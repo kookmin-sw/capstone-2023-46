@@ -99,7 +99,7 @@ fun MainNavigationGraph(
             ScheduleScreen()
         }
         composable("setting") {
-            SettingScreen()
+            SettingScreen(rootNavController)
         }
     }
 }
