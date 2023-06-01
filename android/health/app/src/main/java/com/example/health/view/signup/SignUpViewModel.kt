@@ -3,7 +3,7 @@ package com.example.health.view.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.health.network.ApiService
-import com.example.health.network.SignUpRequest
+import com.example.health.network.request.SignUpRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
