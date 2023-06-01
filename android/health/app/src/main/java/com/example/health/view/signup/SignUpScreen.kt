@@ -1,11 +1,13 @@
 package com.example.health.view.signup
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
@@ -36,6 +38,8 @@ fun SignUpScreen(
                 TextField(
                     value = nickName,
                     onValueChange = { nickName = it },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                     label = { Text(text = "닉네임") }
                 )
 
@@ -44,6 +48,8 @@ fun SignUpScreen(
                 TextField(
                     value = email,
                     onValueChange = { email = it },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                     label = { Text(text = "Email") }
                 )
 
@@ -52,6 +58,8 @@ fun SignUpScreen(
                 TextField(
                     value = password,
                     onValueChange = { password = it },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                     label = { Text(text = "비밀번호") },
                     visualTransformation = PasswordVisualTransformation()
                 )
@@ -61,6 +69,8 @@ fun SignUpScreen(
                 TextField(
                     value = passwordRe,
                     onValueChange = { passwordRe = it },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                     label = { Text(text = "비밀번호 확인") },
                     visualTransformation = PasswordVisualTransformation()
                 )
